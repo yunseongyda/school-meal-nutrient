@@ -13,13 +13,6 @@ class BarplotVisualizer:
         # Create a bar plot for each nutrient
         for nutrient in self.nutrient.columns:
             plt.bar(self.menu, self.nutrient[nutrient], label=nutrient)
-        plt.xlabel('Menu Items')
-        plt.ylabel('Nutrient Values')
-        plt.title('Nutrient Values by Menu Item')
-        plt.xticks(rotation=45, ha='right')
-        plt.legend()
-        plt.tight_layout()
-        plt.show()
 
 
         
