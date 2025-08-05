@@ -1,9 +1,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# Set the font to Malgun Gothic for Korean characters
+plt.rcParams['font.family'] = 'Malgun Gothic'
+
+plt.rcParams['axes.unicode_minus'] = False 
 
 recommended_nutrient = pd.read_csv('data/nutrient_recommendations.csv', encoding='cp949')
 recommended_nutrient = recommended_nutrient.head(2)
-recommended_nutrient = recommended_nutrient.rename(columns={'Unnamed: 0' : '성별(sex)'})
+recommended_nutrient = recommended_nutrient.rename(columns={'Unnamed: 0' : '성별(sex)', '열량(kcal)' : '칼로리(kcal)', '비타민A(mg)' : '비타민A(R.E)'})
+
 
 # set index as 성별(sex)
 recommended_nutrient = recommended_nutrient.set_index('성별(sex)')
