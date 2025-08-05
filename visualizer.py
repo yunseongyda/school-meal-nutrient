@@ -19,12 +19,13 @@ recommended_nutrient = recommended_nutrient.set_index('성별(sex)')
 class BarplotVisualizer:
     def __init__(self, menu, nutrient, gender, gi):
         self.meal = pd.Series(menu)
-        self.nutrient = pd.Series(nutrient)
+        self.nutrient = pd.Series(nutrient, dtype=float)
         self.gender = gender
         self.gender_input = gi
 
     def drawPlot(self):
         recommended = recommended_nutrient.loc[self.gender]
+        nutrient = self.nutrient[recommended.index]
 
         # Create bar plot
         plt.figure(figsize=(12,6))
@@ -35,7 +36,7 @@ class BarplotVisualizer:
         plt.bar(index, recommended, width=bar_width, label='권장 섭취량', color='skyblue')
 
         # Meal nutrient bar
-        plt.bar([i + bar_width for i in index], self.nutrient, width=bar_width, label='오늘 급식', color='lightcoral')
+        plt.bar([i + bar_width for i in index], nutrient, width=bar_width, label='오늘 급식', color='lightcoral')
 
         # Set labels and ticks
         plt.xlabel('영양소')
