@@ -62,6 +62,7 @@ if __name__ == "__main__":
     barplot.drawPlot()
 
     # print meal
+    print(f"\n=============================================\n오늘의 급식")
     for i in whole[0:7]:
         print(f"{i}")
 
