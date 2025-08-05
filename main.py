@@ -1,5 +1,6 @@
 from data_collector import DataCollector
 from visualizer import BarplotVisualizer
+from nutrient_rater import NutrientRater
 
 def get_whole(data):
     # '요리명' ~ '원산지' 사이의 문자열 추출
@@ -59,3 +60,11 @@ if __name__ == "__main__":
     # visualizing
     barplot = BarplotVisualizer(whole[0:7], nutrient, gender, gender_input)
     barplot.drawPlot()
+
+    # print meal
+    for i in whole[0:7]:
+        print(f"{i}")
+
+    # rating
+    rater = NutrientRater(nutrient, gender_input)
+    rater.print_rating()
