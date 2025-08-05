@@ -17,7 +17,7 @@ class NutrientRater:
         return pd.Series(parsed)
 
     def _build_rating_table(self):
-        # 단위 생략, 순서: [부족, 보통하한, 좋음하한, 좋음상한, 보통상한, 과잉]
+        # 단위 생략, 순서: [부족, 약간부족, 좋음, 약간초과, 초과]
         if self.gender == '여':
             return {
                 "열량(kcal)": [469, 603, 737, 871],
