@@ -14,6 +14,20 @@ def get_menu(data):
     return menu
 
 def get_nutrient(data):
+    nutrient_dict = {}
+
+    # Parsing Kcal
+    try:
+        note_block = data.split("비고 :")[1].split("영양소")[0]
+        for line in note_block.split("\n"):
+            if "칼로리" in line:
+                cal_str = line.split("칼로리")[1].strip()
+                calorie = float(cal_str.split()[0])
+                nutrient_dict['칼로리(kcal)'] = calorie
+                break
+    except:
+        nutrient_dict['칼로리(kcal)'] = 0.0
+
     # 영양소 부분의 문자열 추출
     nutrient_block = data.split("영양소")[1].strip()
 
@@ -22,8 +36,6 @@ def get_nutrient(data):
 
     # 각 항목 strip
     nutrient_list = [item.strip() for item in nutrient_list if item.strip()]
-
-    nutrient_dict = {}
 
     for nutrient in nutrient_list:
         sep = nutrient.split(" : ")
@@ -39,10 +51,12 @@ if __name__ == "__main__":
 
     menu = get_menu(data)
     nutrient = get_nutrient(data)
-
+    print("Menu:", menu)
+    print("Nutrient:", nutrient)
     # set sex
     gender_input = input("성별을 입력하세요 (남/여): ")
     gender = 'Male' if gender_input == '남' else 'Female'
 
     # visualizing
     barplot = BarplotVisualizer(menu, nutrient, gender, gender_input)
+    barplot.drawPlot()
