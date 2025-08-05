@@ -1,7 +1,7 @@
 from data_collector import DataCollector
 from visualizer import BarplotVisualizer
 
-def get_menu(data):
+def get_whole(data):
     # '요리명' ~ '원산지' 사이의 문자열 추출
     menu_block = data.split("요리명")[1].split("원산지")[0].strip()
     
@@ -13,19 +13,15 @@ def get_menu(data):
 
     return menu
 
-def get_nutrient(data):
+def get_nutrient(data, cal):
     nutrient_dict = {}
 
     # Parsing Kcal
     try:
-        note_block = data.split("비고 :")[1].split("영양소")[0]
-        for line in note_block.split("\n"):
-            if "칼로리" in line:
-                cal_str = line.split("칼로리")[1].strip()
-                calorie = float(cal_str.split()[0])
-                nutrient_dict['칼로리(kcal)'] = calorie
-                break
-    except:
+        cal = cal.split(" ")[1].strip()
+        nutrient_dict['칼로리(kcal)'] = float(cal)
+    except Exception as e:
+        print(f"[ERROR - Parsing Kcal]: {e}")
         nutrient_dict['칼로리(kcal)'] = 0.0
 
     # 영양소 부분의 문자열 추출
@@ -49,14 +45,17 @@ if __name__ == "__main__":
     data = collector.collect_data()
     print(data)
 
-    menu = get_menu(data)
-    nutrient = get_nutrient(data)
-    print("Menu:", menu)
+    whole = get_whole(data)
+    print(whole)
+    for i in range(len(whole)):
+        print(f"{i}: {whole[i]}")
+    nutrient = get_nutrient(data, whole[7])
+    print("whole:", whole)
     print("Nutrient:", nutrient)
     # set sex
     gender_input = input("성별을 입력하세요 (남/여): ")
     gender = 'Male' if gender_input == '남' else 'Female'
 
     # visualizing
-    barplot = BarplotVisualizer(menu, nutrient, gender, gender_input)
+    barplot = BarplotVisualizer(whole[0:7], nutrient, gender, gender_input)
     barplot.drawPlot()
