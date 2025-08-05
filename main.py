@@ -40,5 +40,9 @@ if __name__ == "__main__":
     menu = get_menu(data)
     nutrient = get_nutrient(data)
 
+    # set sex
+    gender_input = input("성별을 입력하세요 (남/여): ")
+    gender = 'Male' if gender_input == '남' else 'Female'
+
     # visualizing
-    barplot = BarplotVisualizer(menu, nutrient)
+    barplot = BarplotVisualizer(menu, nutrient, gender, gender_input)
